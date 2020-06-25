@@ -23,5 +23,7 @@ class Friend extends Component {
 }
 
 export default connect((store) => {
-    return { store }
+    return {
+        friendList: store.list
+    }
 })(Friend);

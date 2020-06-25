@@ -5,10 +5,11 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 
 class FriendList extends Component {
     async componentDidMount() {
-        if (reactLocalStorage.getObject('friendList').list !== undefined) {
+        if ((this.props.friendList.length === 0) && (reactLocalStorage.getObject('friendList').list !== undefined)) {
             let { dispatch } = this.props;
             await dispatch({ type: 'INIT_DATA', data: reactLocalStorage.getObject('friendList').list });
         };
+        reactLocalStorage.setObject('friendList', {list: this.props.friendList});
     }
 
     componentDidUpdate() {
@@ -17,7 +18,7 @@ class FriendList extends Component {
     
     render() {
         return (
-            <div>
+            <div className="container pt-5">
                 {      
                     this.props.friendList.map((friend, index) => {
                         return <Friend key={index} index={index} name={friend.name} email={friend.email} phone={friend.phone} />
